@@ -18,4 +18,3 @@ while True:
          m -= 60;
      else:
          continue;
-
