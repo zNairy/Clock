@@ -1,7 +1,7 @@
 #/usr/bin/env/python3
+# coding: utf-8
 __author__ = '__zNishikki__'
-__contact__ = 'https://www.github.com/zNishikki/'
-__credits__ = ['']
+__contact__ = 'https://www.github.com/zNairy/ or "__zNairy#7181" '
 __version__ = '1.0.3'
 
 import sys;
