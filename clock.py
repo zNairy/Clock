@@ -1,14 +1,14 @@
 #/usr/bin/env/python3
 # coding: utf-8
-__author__ = '__zNishikki__'
-__contact__ = 'https://www.github.com/zNairy/ or "__zNairy#7181" '
+__author__ = '__Nairy__'
+__contact__ = 'https://www.github.com/zNairy/ or "__Nairy#7181" '
 __version__ = '1.0.3'
 
 import sys;
 import time;
 
 def usage():
-    string = "    clock by: \033[31m__zNishikki__\033[m    ";
+    string = "    clock by: \033[31m__Nairy__\033[m    ";
     print(string.center(60));
     print('[\033[31mx\033[m] Use a opcao \033[31m--\033[m\033[32mc\033[m ou \033[31m--\033[m\033[32mcronometro\033[m para cronometrar um tempo. hora minutos segundos');
     print('Ex: python clock.py \033[31m--\033[m\033[32mc\033[m 10 20 30');
