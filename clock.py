@@ -66,16 +66,15 @@ def usage():
 def main():
     if(len(sys.argv) == 1):
         usage()
-    else:
-        if(sys.argv[1] == '--clock'):
+    elif(sys.argv[1] == '--clock'):
+        clock = Clock()
+        clock.start()
+    elif(sys.argv[1] == '--cronometro'):
+        if(len(sys.argv) == 5):
             clock = Clock()
-            clock.start()
-        elif(sys.argv[1] == '--cronometro'):
-            if(len(sys.argv) == 5):
-                clock = Clock()
-                clock.stopwatch(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
-            else:
-                print('Argumentos faltando, --cronometro (horas) (minutos) (segundos)')
+            clock.stopwatch(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+        else:
+            print('Argumentos faltando, --cronometro (horas) (minutos) (segundos)')
                 
 if __name__ == '__main__':
     main()
