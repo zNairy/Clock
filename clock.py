@@ -1,119 +1,81 @@
-#/usr/bin/env/python3
+#!/usr/bin/env/python3
 # coding: utf-8
-__author__ = '__Nairy__'
-__contact__ = 'https://www.github.com/zNairy/ or "__Nairy#7181" '
-__version__ = '1.0.3'
 
-import sys;
-import time;
+__author__ = '__Nairy__'
+__contact__ = 'https://www.github.com/zNairy/ or __Nairy__#7181 '
+__version__ = ''
+
+import sys
+import time
+import threading
+
+class Clock(object):
+    def __init__(self):
+        self.hour = 0
+        self.minute = 0
+        self.second = 0
+        self._stopwatch = False
+
+    def start(self):
+        thread = threading.Thread(target=self.clock)
+        thread.daemon = True
+        thread.start()
+        self.main()
+
+    def main(self):
+        while(self.minute < 1 and self._stopwatch == False):
+            print(f'{self.second}s', end='\r')
+            time.sleep(1)
+        while(self.hour < 1 and self._stopwatch == False):
+            print(f'{self.minute}M;{self.second}s', end='\r')
+            time.sleep(1)
+        while(self._stopwatch == False):
+            print(f'{self.hour}H;{self.minute}M;{self.second}s', end='\r')
+            time.sleep(1)
+
+    def clock(self):
+        while True is not False:
+            time.sleep(1)
+            if(self._stopwatch == False):
+                self.second += 1
+                if(self.second == 60):
+                    self.minute += 1
+                    self.second = 0
+                if(self.minute == 60):
+                    self.hour += 1
+                    self.minute = 0
+            else:
+                break
+
+    def stopwatch(self, h, m, s):
+        def _start():
+            while True is not False: 
+                if(self.hour == h and self.minute == m and self.second == s):
+                    self._stopwatch = True
+        if(m < 60 and s < 60):
+            thread = threading.Thread(target=_start)
+            thread.daemon = True
+            thread.start()
+            self.start()
+        else:
+            print('Opção invalida')
 
 def usage():
-    string = "    clock by: \033[31m__Nairy__\033[m    ";
-    print(string.center(60));
-    print('[\033[31mx\033[m] Use a opcao \033[31m--\033[m\033[32mc\033[m ou \033[31m--\033[m\033[32mcronometro\033[m para cronometrar um tempo. hora minutos segundos');
-    print('Ex: python clock.py \033[31m--\033[m\033[32mc\033[m 10 20 30');
-    print('[\033[34m*\033[m] Usando a opcao \033[31m--\033[m\033[31mclock\033[m, iniciara o contador normal.\n');
+    print('Use os parâmetros --cronometro ou --clock\n --clock   > conta normalmente\n --cronometro (horas) (minutos) (segundos) ')
 
-class Clock():
-    def __init__(self):
-        print('\033[31mClock\033[m'.center(50))
-    def Cronometro(self, hours, minutes, seconds):
-        if int(seconds) >= 60 or int(minutes) >= 60:
-            print('Coloque numeros equivalentes...')
-            sys.exit()
-        hour = 0;minute = 0;second = 0; 
-        while True:
-            if int(hours) == hour and int(minutes) == minute and int(seconds) == second:
-                print(str(second)+'s');    
-                print('\033[31mbye...\033[m')
-                sys.exit();
-            print(str(second) + 's', end='\r')
-            second += 1;time.sleep(1);
-            if second == 60:
-                minute += 1;second -= 60;
-                while True:
-                    if int(hours) == hour and int(minutes) == minute and int(seconds) == second:
-                        print(str(minute)+'M;'+str(second)+'s', end='\r');
-                        print('\033[32mbye...\033[m')
-                        sys.exit();
-                    print(str(minute)+'M;'+str(second)+'s', end='\r');
-                    second += 1;time.sleep(1);
-                    if second == 60:
-                        minute += 1;second -= 60;
-                    else:
-                        continue;
-                    if minute == 60:
-                        hour += 1;minute -= 60;
-                        while True:
-                            if int(hours) == hour and int(minutes) == minute and int(seconds) == second:
-                                print(str(hour)+'H;'+str(minute)+'M;'+str(second)+'s', end='\r');
-                                print('\033[32mbye...\033[m')
-                                sys.exit();
-                            print(str(hour)+'H;'+str(minute)+'M;'+str(second)+'s', end='\r');
-                            second += 1;time.sleep(1);
-                            if second == 60:
-                                minute += 1;second -= 60;
-                            else:
-                                continue;
-                            if minute == 60:
-                                hour += 1;minute -= 60;
-                            else:
-                                continue;
-
-    def Clock(self):
-        hour = 0;minute = 0;second = 0;
-        while True:
-            print(str(second)+'s', end='\r');
-            second += 1;time.sleep(1);
-            if second == 60:
-                minute += 1;second -= 60;
-                while True:
-                    print(str(minute)+'M;'+str(second)+'s', end='\r');
-                    second += 1;time.sleep(1);
-                    if second == 60:
-                        minute += 1;second -= 60;
-                    else:
-                        continue;
-                    if minute == 60:
-                        hour += 1;minute -= 60;
-                        while True:
-                            print(str(hour)+'H;'+str(minute)+'M;'+str(second)+'s', end='\r');
-                            second += 1;time.sleep(1);
-                            if second == 60:
-                                minute += 1;second -= 60;
-                            else:
-                                continue;
-                            if minute == 60:
-                                hour += 1;minute -= 60;
-                            else:
-                                continue;
-
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        usage();
-        sys.exit()
+def main():
+    if(len(sys.argv) == 1):
+        usage()
     else:
-        if sys.argv[1] == '--cronometro' or sys.argv[1] == '--c':
-            if len(sys.argv) == 5:
-                try:
-                    clock = Clock()
-                    clock.Cronometro(sys.argv[2], sys.argv[3], sys.argv[4])
-                except KeyboardInterrupt:
-                    print('\n \033[32m[*] bye...\033[m')
-                    sys.exit();
+        if(sys.argv[1] == '--clock'):
+            clock = Clock()
+            clock.start()
+        elif(sys.argv[1] == '--cronometro'):
+            if(len(sys.argv) == 5):
+                clock = Clock()
+                clock.stopwatch(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
             else:
-                print('\033[31m[x] Faltando argumentos...\033[m \n')
-                usage();
-                sys.exit()
-        else:
-            if sys.argv[1] == '--clock':
-                try:
-                    clock = Clock()
-                    clock.Clock();
-                except KeyboardInterrupt:
-                    print("\n[x] See u later...");
-                    sys.exit();
-            else:
-                print("[x] Faltando argumentos...");
-                usage();
+                print('Argumentos faltando, --cronometro (horas) (minutos) (segundos)')
+                
+if __name__ == '__main__':
+    main()
